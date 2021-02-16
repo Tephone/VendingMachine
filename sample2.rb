@@ -47,7 +47,7 @@ class VendingMachine
     end
 
     def buy(drink)
-        stocks = which_drink?(drink)
+        stocks = which_drink_stocks?(drink)
 
         if @total_money < drink.price
             puts "お金が足りません" 
@@ -69,7 +69,7 @@ class VendingMachine
     end 
 
     def can_you_buy?(drink)
-        stocks = which_drink?(drink)
+        stocks = which_drink_stocks?(drink)
         if @total_money > 120 && stocks > 0 && drink.name == 'cola' 
             "cola:#{stocks}個"
         elsif @total_money > 100 && stocks != 0 && drink.name == 'water' 
@@ -91,7 +91,7 @@ class VendingMachine
         can_you_buy?(Drink.redbull)
     end
  
-    def which_drink?(drink)
+    def which_drink_stocks?(drink)
         if drink.name == "cola"
             @cola_stock
         elsif drink.name == "water"
@@ -171,7 +171,7 @@ puts(@ss.redbull_stock)
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 
-@ss.buy(Drink.redbull)
+#@ss.buy(Drink.redbull)
 #puts (@ss.can_buy_list)
 puts ""
 puts ""

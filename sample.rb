@@ -42,12 +42,13 @@ class VendingMachine
       puts @slot_money
       # 自動販売機に入っているお金を0円に戻す
       @slot_money = 0
+      
     end
   end
   
   vm = VendingMachine.new
   vm.slot_money(100)
-  vm.return_money
+  puts(vm.return_money)
 
 
   

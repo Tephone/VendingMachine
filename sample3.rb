@@ -1,3 +1,5 @@
+require "thor"
+require "pry"
 
 class Drink
     attr_reader :name, :price
@@ -26,15 +28,21 @@ puts(Drink.cola.name)
 class VendingMachine
     MONEY = [10, 50, 100, 500, 1000].freeze
 
-    attr_reader :total_money, :cola_stock, :water_stock, :redbull_stock, :sale_amount
+    attr_reader :total_money, :cola_stock, :water_stock, :redbull_stock, :sale_amount, :stock
+
+
+    def total_money
+        @total_money
+    end
 
     def initialize
         @total_money = 0
         @sale_amount = 0
         #@_table[0][0] = {:cola -> ["cola", "cola", "cola", "cola", "cola"], :water -> ["cola", "cola", "cola", "cola", "cola"]}
-        @cola_stock = 5
-        @water_stock = 5
-        @redbull_stock = 5
+        @stock = {cola:5, water:5, redbull: 5}
+        # @cola_stock = 5
+        # @water_stock = 5
+        # @redbull_stock = 5
     end
 
     def insert(money)   
@@ -47,18 +55,22 @@ class VendingMachine
     end
 
     def buy(drink)
-        stocks = which_drink_stocks?(drink)
+        #stocks = @stock[drink.name.to_sym]
+        #puts stocks
+        #binding.pry 
 
         if @total_money < drink.price
             puts "お金が足りません" 
-        elsif stocks == 0
+        elsif  @stock[drink.name.to_sym] == 0 #stocks == 0
             puts "#{drink.name}の在庫がありません" 
         else
             puts "#{drink.name}をお買い上げ頂きありがとうございます"
             @total_money -= drink.price  # @total_money = @total_money - drink.price
-            @cola_stock -= 1 if drink.name == "cola" # @#{drink}_stock -= 1
-            @water_stock -= 1 if drink.name == "water"
-            @redbull_stock -= 1 if drink.name == "redbull"
+            @stock[drink.name.to_sym] -= 1 
+            #binding.pry 
+            # @cola_stock -= 1 if drink.name == "cola" # @#{drink}_stock -= 1
+            # @water_stock -= 1 if drink.name == "water"
+            # @redbull_stock -= 1 if drink.name == "redbull"
             @sale_amount += drink.price 
             puts "残り#{@total_money}円分購入可能です" #step5
         end
@@ -69,7 +81,7 @@ class VendingMachine
     end 
 
     def can_you_buy?(drink)
-        stocks = which_drink_stocks?(drink)
+        stocks = @stock[drink.name.to_sym]
         if @total_money > 120 && stocks > 0 && drink.name == 'cola' 
             "cola:#{stocks}個"
         elsif @total_money > 100 && stocks > 0 && drink.name == 'water' 
@@ -91,20 +103,25 @@ class VendingMachine
         can_you_buy?(Drink.redbull)
     end
  
-    def which_drink_stocks?(drink)
-        if drink.name == "cola"
-            @cola_stock
-        elsif drink.name == "water"
-            @water_stock
-        else
-            @redbull_stock
-        end
-    end
+    # def which_drink_stocks?(drink)
+    #     if drink.name == "cola"
+    #         @cola_stock
+    #     elsif drink.name == "water"
+    #         @water_stock
+    #     else
+    #         @redbull_stock
+    #     end
+    # end
 
     def store(drink, num)
-        @cola_stock += num if drink.name == 'cola'
-        @water_stock += num if drink.name == 'water'
-        @redbull_stock += num if drink.name == 'redbull'
+        # @cola_stock += num if drink.name == 'cola'
+        # @water_stock += num if drink.name == 'water'
+        # @redbull_stock += num if drink.name == 'redbull'
+
+        @stock[drink.name.to_sym] += num if drink.name == 'cola'
+        @stock[drink.name.to_sym] if drink.name == 'water'
+        @stock[drink.name.to_sym] if drink.name == 'redbull'
+
     end
 end
 
@@ -113,32 +130,32 @@ end
 @ss.insert(1000)
 
 puts(@ss.total_money)
-puts(@ss.cola_stock)
+puts(@ss.stock[:cola])
 puts ""
 puts ""
 puts "~cola買う~"
 @ss.buy(Drink.cola) #[name: "cola", price: 120] 
-puts(@ss.cola_stock)
+puts(@ss.stock[:cola])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 puts "~cola買う~"
 @ss.buy(Drink.cola)
-puts(@ss.cola_stock)
+puts(@ss.stock[:cola])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 puts "~cola買う~"
 @ss.buy(Drink.cola)
-puts(@ss.cola_stock)
+puts(@ss.stock[:cola])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 puts "~cola買う~"
 @ss.buy(Drink.cola)
-puts(@ss.cola_stock)
+puts(@ss.stock[:cola])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 puts "~cola買う~"
 @ss.buy(Drink.cola)
-puts(@ss.cola_stock)
+puts(@ss.stock[:cola])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 puts "~cola買う~"
@@ -148,19 +165,19 @@ puts ""
 puts ""
 puts "~水を買う~"
 @ss.buy(Drink.water)
-puts(@ss.water_stock)
+puts(@ss.stock[:water])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 puts ""
 puts ""
 puts "~redbullを買う~"
 @ss.buy(Drink.redbull)
-puts(@ss.redbull_stock)
+puts(@ss.stock[:redbull])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 puts "~redbullを買う~"
 @ss.buy(Drink.redbull)
-puts(@ss.redbull_stock)
+puts(@ss.stock[:redbull])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 #puts(@ss.return_money)
@@ -170,7 +187,7 @@ puts""
 puts""
 puts"使い切る"
 @ss.buy(Drink.water)
-puts(@ss.redbull_stock)
+puts(@ss.stock[:redbull])
 puts(@ss.total_money)
 puts(@ss.sale_amount)
 

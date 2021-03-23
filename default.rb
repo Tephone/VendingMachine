@@ -102,7 +102,7 @@ class VendingMachine
         puts (can_you_buy?(Drink.water))
         can_you_buy?(Drink.redbull)
     end
- 
+
     # def which_drink_stocks?(drink)
     #     if drink.name == "cola"
     #         @cola_stock
@@ -121,7 +121,6 @@ class VendingMachine
         @stock[drink.name.to_sym] += num if drink.name == 'cola'
         @stock[drink.name.to_sym] if drink.name == 'water'
         @stock[drink.name.to_sym] if drink.name == 'redbull'
-
     end
 end
 

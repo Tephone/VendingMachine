@@ -27,11 +27,7 @@ class VendingMachine
   def initialize
     @total_money = 0
     @sale_amount = 0
-    @stock = {cola:5, water:5, redbull: 5}
-  end
-
-  def total_money
-    @total_money
+    @stock = {cola: 5, water: 5, redbull: 5}
   end
 
   def insert(money)   

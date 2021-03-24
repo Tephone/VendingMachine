@@ -22,7 +22,7 @@ class Drink
 end
 
 class VendingMachine
-  attr_reader :total_money, :cola_stock, :water_stock, :redbull_stock, :sale_amount, :stock
+  attr_reader :total_money, :sale_amount, :stock
   MONEY = [10, 50, 100, 500, 1000].freeze
   def initialize
     @total_money = 0
@@ -52,11 +52,11 @@ class VendingMachine
 
   def can_you_buy?(drink)
     stocks = @stock[drink.name.to_sym]
-    if @total_money >= 120 && stocks > 0 && drink.name == 'cola' 
+    if @total_money >= 120 && stocks > 0 && drink.name == 'cola'
       "cola:#{stocks}"
-    elsif @total_money >= 100 && stocks > 0 && drink.name == 'water' 
+    elsif @total_money >= 100 && stocks > 0 && drink.name == 'water'
       "water:#{stocks}"
-    elsif @total_money >= 200 && stocks > 0 && drink.name == 'redbull' 
+    elsif @total_money >= 200 && stocks > 0 && drink.name == 'redbull'
       "redbull:#{stocks}"
     else
       "#{drink.name}:買えません"

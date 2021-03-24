@@ -28,21 +28,15 @@ puts(Drink.cola.name)
 class VendingMachine
     MONEY = [10, 50, 100, 500, 1000].freeze
 
-    attr_reader :total_money, :cola_stock, :water_stock, :redbull_stock, :sale_amount, :stock
-
-
-    def total_money
-        @total_money
-    end
-
+    attr_reader :total_money, :sale_amount, :stock
     def initialize
         @total_money = 0
         @sale_amount = 0
-        #@_table[0][0] = {:cola -> ["cola", "cola", "cola", "cola", "cola"], :water -> ["cola", "cola", "cola", "cola", "cola"]}
         @stock = {cola:5, water:5, redbull: 5}
-        # @cola_stock = 5
-        # @water_stock = 5
-        # @redbull_stock = 5
+    end
+
+    def total_money
+        @total_money
     end
 
     def insert(money)   
@@ -55,29 +49,22 @@ class VendingMachine
     end
 
     def buy(drink)
-        #stocks = @stock[drink.name.to_sym]
-        #puts stocks
-        #binding.pry 
-
         if @total_money < drink.price
             puts "お金が足りません" 
-        elsif  @stock[drink.name.to_sym] == 0 #stocks == 0
+        elsif  @stock[drink.name.to_sym] == 0
             puts "#{drink.name}の在庫がありません" 
         else
             puts "#{drink.name}をお買い上げ頂きありがとうございます"
-            @total_money -= drink.price  # @total_money = @total_money - drink.price
-            @stock[drink.name.to_sym] -= 1 
-            #binding.pry 
-            # @cola_stock -= 1 if drink.name == "cola" # @#{drink}_stock -= 1
-            # @water_stock -= 1 if drink.name == "water"
-            # @redbull_stock -= 1 if drink.name == "redbull"
-            @sale_amount += drink.price 
-            puts "残り#{@total_money}円分購入可能です" #step5
+            @total_money -= drink.price
+            @stock[drink.name.to_sym] -= 1
+            @sale_amount += drink.price
+            puts "残り#{@total_money}円分購入可能です"
         end
-    end    
+    end
+
     def return_money
-        puts "#{@total_money}円のおつりです" 
-        @total_money = 0    
+        puts "#{@total_money}円のおつりです"
+        @total_money = 0
     end 
 
     def can_you_buy?(drink)
@@ -90,11 +77,7 @@ class VendingMachine
             "redbull:#{stocks}個"
         else
             "#{drink.name}は買えません"
-        end
-        # puts "cola:#{stocks}" if @total_money > 120 && stocks > 0 && drink.name == 'cola'
-        # puts "water:#{stocks}" if @total_money > 100 && stocks != 0 && drink.name == 'water'
-        # puts "redbull:#{stocks}" if @total_money > 200 && stocks > 0 && drink.name == 'redbull'
-        #  "何も買えません" 
+        end 
     end
 
     def can_you_buy_list
@@ -103,24 +86,8 @@ class VendingMachine
         can_you_buy?(Drink.redbull)
     end
 
-    # def which_drink_stocks?(drink)
-    #     if drink.name == "cola"
-    #         @cola_stock
-    #     elsif drink.name == "water"
-    #         @water_stock
-    #     else
-    #         @redbull_stock
-    #     end
-    # end
-
     def store(drink, num)
-        # @cola_stock += num if drink.name == 'cola'
-        # @water_stock += num if drink.name == 'water'
-        # @redbull_stock += num if drink.name == 'redbull'
-
-        @stock[drink.name.to_sym] += num if drink.name == 'cola'
-        @stock[drink.name.to_sym] if drink.name == 'water'
-        @stock[drink.name.to_sym] if drink.name == 'redbull'
+        @stock[drink.name.to_sym] += num
     end
 end
 

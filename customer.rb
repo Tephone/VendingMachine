@@ -8,7 +8,6 @@ MONEY = [10, 50, 100, 500, 1000].freeze
 @water = Drink.water
 @redbull = Drink.redbull
 
-
 puts 'こんにちはお客様、あなた望みはなんでしょう？'
 puts '1:飲み物を買う事'
 puts '2:この会話を止める事'

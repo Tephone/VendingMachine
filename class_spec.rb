@@ -25,9 +25,9 @@ describe VendingMachine do
   example 'initialize' do
     expect(@vm.total_money).to eq 0
     expect(@vm.sale_amount).to eq 0
-    expect(@vm.stock[@cola.name.to_sym]).to eq 5
-    expect(@vm.stock[@water.name.to_sym]).to eq 5
-    expect(@vm.stock[@redbull.name.to_sym]).to eq 5
+    expect(@vm.stocks[@cola.name.to_sym]).to eq 5
+    expect(@vm.stocks[@water.name.to_sym]).to eq 5
+    expect(@vm.stocks[@redbull.name.to_sym]).to eq 5
   end
   example 'insert(money)' do
     @vm.insert(100)
@@ -40,7 +40,7 @@ describe VendingMachine do
     expect(@vm.total_money).to eq 100
     @vm.buy(@water)
     expect(@vm.total_money).to eq 0
-    expect(@vm.stock[@water.name.to_sym]).to eq 4
+    expect(@vm.stocks[@water.name.to_sym]).to eq 4
     expect(@vm.sale_amount).to eq 100
   end
   example 'return_money' do
@@ -49,16 +49,17 @@ describe VendingMachine do
     @vm.return_money
     expect(@vm.total_money).to eq 0
   end
-  example 'can_you_buy?(drink)' do
+  example 'purchasable?(drink)' do
     @vm.insert(100)
-    expect(@vm.can_you_buy?(@cola)).to eq "cola:買えません"
-    expect(@vm.can_you_buy?(@water)).to eq "water:5"
+    expect(@vm.purchasable?(@cola)).to eq "cola:買えません"
+    expect(@vm.purchasable?(@water)).to eq "water:5"
+    expect(@vm.purchasable?(@redbull)).to eq "redbull:買えません"
     @vm.insert(100)
-    expect(@vm.can_you_buy?(@redbull)).to eq "redbull:5"
+    expect(@vm.purchasable?(@redbull)).to eq "redbull:5"
   end
   example 'store(drink, num)' do
-    expect(@vm.stock[@cola.name.to_sym]).to eq 5
+    expect(@vm.stocks[@cola.name.to_sym]).to eq 5
     @vm.store(@cola, 2)
-    expect(@vm.stock[@cola.name.to_sym]).to eq 7
+    expect(@vm.stocks[@cola.name.to_sym]).to eq 7
   end
 end

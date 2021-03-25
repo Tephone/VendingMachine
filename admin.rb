@@ -1,7 +1,7 @@
 require "thor"
 require "pry"
 require_relative 'class'
-# require_relative 'customer'
+#require_relative 'customer'
 
 #customerと繋ぐときはコメントアウト
 @vm = VendingMachine.new
@@ -25,9 +25,9 @@ if number == 1
 elsif number == 2
   while true
     puts '在庫は以下の通りです'
-    puts"コーラ：#{@vm.stock[@cola.name.to_sym]}"
-    puts"お水：#{@vm.stock[@water.name.to_sym]}"
-    puts"レッドブル：#{@vm.stock[@redbull.name.to_sym]}"
+    puts"コーラ：#{@vm.stocks[@cola.name.to_sym]}"
+    puts"お水：#{@vm.stocks[@water.name.to_sym]}"
+    puts"レッドブル：#{@vm.stocks[@redbull.name.to_sym]}"
     puts '在庫の補充を行いますか？'
     puts '1:はい'
     puts '2:いいえ'

@@ -22,12 +22,12 @@ class Drink
 end
 
 class VendingMachine
-  attr_reader :total_money, :sale_amount, :stock
+  attr_reader :total_money, :sale_amount, :stocks
   MONEY = [10, 50, 100, 500, 1000].freeze
   def initialize
     @total_money = 0
     @sale_amount = 0
-    @stock = {cola: 5, water: 5, redbull: 5}
+    @stocks = {cola: 5, water: 5, redbull: 5}
   end
 
   def insert(money)   
@@ -38,7 +38,7 @@ class VendingMachine
 
   def buy(drink)
     @total_money -= drink.price
-    @stock[drink.name.to_sym] -= 1
+    @stocks[drink.name.to_sym] -= 1
     @sale_amount += drink.price
   end    
 
@@ -46,26 +46,21 @@ class VendingMachine
     @total_money = 0    
   end 
 
-  def can_you_buy?(drink)
-    stocks = @stock[drink.name.to_sym]
-    if @total_money >= 120 && stocks > 0 && drink.name == 'cola'
-      "cola:#{stocks}"
-    elsif @total_money >= 100 && stocks > 0 && drink.name == 'water'
-      "water:#{stocks}"
-    elsif @total_money >= 200 && stocks > 0 && drink.name == 'redbull'
-      "redbull:#{stocks}"
+  def purchasable?(drink)
+    if @total_money >= drink.price && @stocks[drink.name.to_sym] > 0 
+      "#{drink.name}:#{@stocks[drink.name.to_sym]}"
     else
       "#{drink.name}:買えません"
     end
   end
 
-  def can_you_buy_list
-    puts (can_you_buy?(Drink.cola))
-    puts (can_you_buy?(Drink.water))
-    puts (can_you_buy?(Drink.redbull))
+  def purchasable_drink_list
+    puts (purchasable?(Drink.cola))
+    puts (purchasable?(Drink.water))
+    puts (purchasable?(Drink.redbull))
   end
 
   def store(drink, num)
-    @stock[drink.name.to_sym] += num 
+    @stocks[drink.name.to_sym] += num 
   end
 end

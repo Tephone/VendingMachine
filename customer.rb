@@ -31,7 +31,7 @@ if number == 1
           if @vm.total_money < @cola.price
             puts "お金が足りません"
             break
-          elsif @vm.stock[@cola.name.to_sym] == 0
+          elsif @vm.stocks[@cola.name.to_sym] == 0
             puts "#{@cola.name}の在庫がありません"
             break
           else
@@ -43,7 +43,7 @@ if number == 1
           if @vm.total_money < @water.price
             puts "お金が足りません"
             break
-          elsif @vm.stock[@water.name.to_sym] == 0
+          elsif @vm.stocks[@water.name.to_sym] == 0
             puts "#{@water.name}の在庫がありません"
             break
           else
@@ -55,7 +55,7 @@ if number == 1
           if @vm.total_money < @redbull.price
             puts "お金が足りません"
             break
-          elsif @vm.stock[@redbull.name.to_sym] == 0
+          elsif @vm.stocks[@redbull.name.to_sym] == 0
             puts "#{@redbull.name}の在庫がありません"
             break
           else
@@ -70,7 +70,7 @@ if number == 1
         number = gets.to_i
         if number == 1
           puts '購入可能なドリンクリストは以下の通りです'
-          @vm.can_you_buy_list
+          @vm.purchasable_drink_list
           puts 'お金を追加しますか？'
           puts '1:はい'
           puts '2:いいえ'

@@ -1,13 +1,13 @@
 require "thor"
 require "pry"
 require_relative 'class'
-#require_relative 'customer'
+require_relative 'customer'
 
 #customerと繋ぐときはコメントアウト
-@vm = VendingMachine.new
-@cola = Drink.cola
-@water = Drink.water
-@redbull = Drink.redbull
+# @vm = VendingMachine.new
+# @cola = Drink.cola
+# @water = Drink.water
+# @redbull = Drink.redbull
 
 puts 'こんにちは、管理者さん'
 puts '本日はどんなごようでしょうか？'
